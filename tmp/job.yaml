@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: busybox
+spec:
+  template:
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:latest
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo $(SECRET_1) echo $(SECRET_2) ; sleep 60; done"]
+        env:
+          - name: SECRET_1
+            valueFrom:
+              secretKeyRef:
+                name: secret-secret-1
+                key: secret-1
+          - name: SECRET_2
+            valueFrom:
+              secretKeyRef:
+                name: secret-secret-2
+                key: secret-2
+      restartPolicy: Never
+  backoffLimit: 0
