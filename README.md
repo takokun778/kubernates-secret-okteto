@@ -1,0 +1,1 @@
+# kubernates-secret-okteto
